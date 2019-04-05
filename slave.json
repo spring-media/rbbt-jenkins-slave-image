@@ -30,25 +30,26 @@
     }],
     "provisioners": [
         {
-            "type": "shell",
-            "inline": [
-                "mkdir $HOME/bin"
-            ]
-        },
-        {
             "type": "file",
-            "source": "cleanup_docker.sh",
-            "destination": "$HOME/bin/cleanup_docker.sh"
+            "source": "files/cleanup_docker.sh",
+            "destination": "/tmp/cleanup_docker.sh"
         },
         {
             "type": "shell",
             "scripts": [
-                "user.sh",
-                "packages.sh",
-                "nodejs_npm.sh",
-                "configuration.sh",
-                "install_docker.sh"
+                "scripts/user.sh",
+                "scripts/packages.sh",
+                "scripts/nodejs_npm.sh",
+                "scripts/configuration.sh",
+                "scripts/install_docker.sh"
             ]
         }
-    ]
+    ],
+    "post-processors": [
+        {
+          "type": "manifest",
+          "output": "manifest.json",
+          "strip_path": true
+        }
+      ]
 }

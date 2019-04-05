@@ -18,3 +18,4 @@ sudo yum install --assumeyes \
     perl-Net-SSLeay \
     perl-IO-Socket-SSL \
     perl-Digest-SHA gcc
+    
