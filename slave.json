@@ -1,0 +1,54 @@
+{
+    "variables": {
+        "user_path": "{{env `HOME`}}",
+        "vpc_id": "vpc-5f920e38",
+        "subnet": "subnet-5a0e9213",
+        "ssh_username": "ec2-user",
+        "region": "eu-west-1"
+    },
+    "builders": [{
+        "type": "amazon-ebs",
+        "profile": "default",
+        "instance_type": "t2.micro",
+        "iam_instance_profile": "JenkinsEC2Role",
+        "associate_public_ip_address": true,
+        "subnet_id": "{{user `subnet`}}",
+        "region": "{{user `region`}}",
+        "vpc_id": "{{user `vpc_id`}}",
+        "source_ami_filter": {
+            "filters": {
+                "virtualization-type": "hvm",
+                "name": "amzn2-ami-hvm-*-x86_64-ebs",
+                "root-device-type": "ebs"
+            },
+            "owners": ["amazon"],
+            "most_recent": true
+        },
+        "ssh_username": "{{user `ssh_username`}}",
+        "ami_name": "packer-jenkins-slave",
+        "ami_description": "Jenkins slave AMI created by Packer."
+    }],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": [
+                "mkdir $HOME/bin"
+            ]
+        },
+        {
+            "type": "file",
+            "source": "cleanup_docker.sh",
+            "destination": "$HOME/bin/cleanup_docker.sh"
+        },
+        {
+            "type": "shell",
+            "scripts": [
+                "user.sh",
+                "packages.sh",
+                "nodejs_npm.sh",
+                "configuration.sh",
+                "install_docker.sh"
+            ]
+        }
+    ]
+}
