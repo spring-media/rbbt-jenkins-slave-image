@@ -12,7 +12,6 @@ printf "%-7s \t hard \t nofile \t 50000\n" "$user" | sudo tee -a /etc/security/l
 printf "%-7s \t soft \t nofile \t 50000\n" "$user" | sudo tee -a /etc/security/limits.conf
 done
 
-
 # cron
 sudo curl https://aws-cloudwatch.s3.amazonaws.com/downloads/CloudWatchMonitoringScripts-1.2.2.zip -O
 

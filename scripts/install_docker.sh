@@ -11,5 +11,5 @@ sudo yum install -y docker docker-compose
 sudo usermod -aG docker $(whoami)
 sudo usermod -aG docker jenkins
 
-# start Docker service
-sudo service docker start
+# start Docker on boot
+sudo systemctl enable docker.service
