@@ -17,5 +17,6 @@ sudo tar zxvf opsworks-config.tar.gz \
 
 sudo cp -a config/common/. /var/lib/jenkins/.ssh/
 sudo cp -a config/jenkins/ssh/. /var/lib/jenkins/.ssh/
+sudo cp  /tmp/authorized_keys /var/lib/jenkins/.ssh/
 
 sudo chown -R jenkins:jenkins /var/lib/jenkins/

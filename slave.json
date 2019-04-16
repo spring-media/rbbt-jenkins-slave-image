@@ -1,16 +1,12 @@
 {
-    "variables": {
-        "user_path": "{{env `HOME`}}",
-        "vpc_id": "vpc-5f920e38",
-        "subnet": "subnet-5a0e9213",
-        "ssh_username": "ec2-user",
-        "region": "eu-west-1"
-    },
     "builders": [{
+        "ami_name": "{{user `name`}}-{{isotime | clean_ami_name}}",
+        "ami_description": "Jenkins slave AMI created by Packer.",
         "type": "amazon-ebs",
+        "ssh_username": "{{user `ssh_username`}}",
         "profile": "default",
         "instance_type": "t2.micro",
-        "iam_instance_profile": "JenkinsEC2Role",
+        "iam_instance_profile": "{{user `role`}}",
         "associate_public_ip_address": true,
         "subnet_id": "{{user `subnet`}}",
         "region": "{{user `region`}}",
@@ -23,25 +19,27 @@
             },
             "owners": ["amazon"],
             "most_recent": true
-        },
-        "ssh_username": "{{user `ssh_username`}}",
-        "ami_name": "packer-jenkins-slave",
-        "ami_description": "Jenkins slave AMI created by Packer."
+        }
     }],
     "provisioners": [
         {
             "type": "file",
-            "source": "files/cleanup_docker.sh",
+            "source": "{{user `files_path`}}/cleanup_docker.sh",
             "destination": "/tmp/cleanup_docker.sh"
+        },
+        {
+            "type": "file",
+            "source": "{{user `files_path`}}/authorized_keys",
+            "destination": "/tmp/authorized_keys"
         },
         {
             "type": "shell",
             "scripts": [
-                "scripts/user.sh",
-                "scripts/packages.sh",
-                "scripts/nodejs_npm.sh",
-                "scripts/configuration.sh",
-                "scripts/install_docker.sh"
+                "{{user `scripts_path`}}/user.sh",
+                "{{user `scripts_path`}}/packages.sh",
+                "{{user `scripts_path`}}/nodejs_npm.sh",
+                "{{user `scripts_path`}}/configuration.sh",
+                "{{user `scripts_path`}}/install_docker.sh"
             ]
         }
     ],
@@ -49,7 +47,10 @@
         {
           "type": "manifest",
           "output": "manifest.json",
-          "strip_path": true
+          "strip_path": true,
+          "custom_data": {
+              "changes": "{{user `changes`}}"
+          }
         }
       ]
 }

@@ -1,0 +1,11 @@
+{   
+    "name": "jenkins-slave",
+    "changes": "",
+    "files_path": "files",
+    "scripts_path": "scripts",
+    "ssh_username": "ec2-user",
+    "role": "JenkinsEC2Role",
+    "vpc_id": "vpc-5f920e38",
+    "subnet": "subnet-5a0e9213",
+    "region": "eu-west-1"
+}
