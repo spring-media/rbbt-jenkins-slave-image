@@ -4,13 +4,20 @@
         "ami_description": "Jenkins slave AMI created by Packer.",
         "type": "amazon-ebs",
         "ssh_username": "{{user `ssh_username`}}",
-        "profile": "default",
-        "instance_type": "t2.micro",
+        "instance_type": "t2.medium",
         "iam_instance_profile": "{{user `role`}}",
         "associate_public_ip_address": true,
         "subnet_id": "{{user `subnet`}}",
         "region": "{{user `region`}}",
+        "profile": "{{user `profile`}}",
         "vpc_id": "{{user `vpc_id`}}",
+        "launch_block_device_mappings": [
+            {
+              "device_name": "/dev/xvda",
+              "volume_size": 40,
+              "delete_on_termination": true
+            }
+          ],
         "source_ami_filter": {
             "filters": {
                 "virtualization-type": "hvm",

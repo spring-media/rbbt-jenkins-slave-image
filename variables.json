@@ -7,5 +7,6 @@
     "role": "JenkinsEC2Role",
     "vpc_id": "vpc-5f920e38",
     "subnet": "subnet-5a0e9213",
-    "region": "eu-west-1"
+    "region": "eu-west-1",
+    "profile": "default"
 }
