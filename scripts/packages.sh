@@ -4,8 +4,9 @@ sudo yum update -y
 
 sudo yum groupinstall -y "Development Tools"
 
+sudo amazon-linux-extras install ruby2.4 java-openjdk11
+
 sudo yum install --assumeyes \
-    java-1.8.0-openjdk-devel \
     cronie \
     jq \
     zip \
